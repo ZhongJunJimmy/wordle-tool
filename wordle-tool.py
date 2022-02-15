@@ -1,13 +1,17 @@
 import nltk
 import re
+
+# download dictionary, when first run this program
 # nltk.download('words')
+
+# set console font color following wordle rule
 class bcolors:
     UNEXIST = '\033[30m\033[100m'
     CURRECT = '\033[30m\033[102m'
     WrongPos = '\033[30m\033[43m'
     ENDC = '\033[0m'
     
-
+# validate the answer entering by user
 def str_answer_validation(str_answer):
     if(len(str_answer) == 5):
         for letter in str_answer:
@@ -19,6 +23,7 @@ def str_answer_validation(str_answer):
     
     return 1
 
+# validate the status entering by user form wordle result
 def str_status_validation(str_status):
     if(len(str_status) == 5):
         for letter in str_status:
@@ -30,6 +35,7 @@ def str_status_validation(str_status):
         return 0
     return 1
 
+# input answer with validation
 def input_answer():
     str_answer_validation_status = 0
     while True:
@@ -40,7 +46,7 @@ def input_answer():
         else:
             print('The length of answer MUST equal 5 and MUST be an alphabet.')
     
-
+# input status with validation
 def input_status():
     str_status_validation_status = 0
     while True:
@@ -52,6 +58,7 @@ def input_status():
         else:
             print('The length of answer MUST equal 5 and MUST be an digital.')
 
+# show answer and status following wordle rules with user entering
 def show_answer_status(str_answer, str_status):
     count = 0
     current_status = ""
@@ -67,7 +74,7 @@ def show_answer_status(str_answer, str_status):
             count+=1
     print(current_status)
 
-
+# compare and match by regex, return recommand list
 def check_recommand(str_answer, str_status, wordlist):
     list_regex_current = list('^.....$')
 
@@ -89,25 +96,26 @@ def check_recommand(str_answer, str_status, wordlist):
             list_match_reg = list('^.....$')
             list_match_reg[count+1] = '[^'+str_answer[count]+']'
             str_match_reg = ''.join(list_match_reg)
-            print(str_match_reg)
-            print(wordlist)
+            # print(str_match_reg)
+            # print(wordlist)
             wordlist = [w for w in wordlist if re.search(str_match_reg, w.lower())]
-            print(wordlist)
+            # print(wordlist)
             count+=1
     
     str_regex_current = ''.join(list_regex_current)
     # print(str_regex_current)
     # print(str_regex_wrongPos)
     if(str_regex_current != '^.....$'):
-        print(str_regex_current)
-        print(wordlist[:20])
+        # print(str_regex_current)
+        # print(wordlist[:20])
         wordlist = [w for w in wordlist if re.match(str_regex_current, w.lower())]
-        print(wordlist[:20])
+        # print(wordlist[:20])
     #print(wordlist)
     #sort_by_rule(str_answer, str_status, wordlist)
     #print(wordlist)
     return wordlist # return top 20 result
 
+# show recommand list by table
 def show_recommand_word(result):
     print('Recommand Answer: ')
     count = 1
@@ -115,7 +123,7 @@ def show_recommand_word(result):
         print(str(count) + '\t' + word)
         count+=1
 
-
+# main function
 def main():
     wordlist = nltk.corpus.words.words()
     wordlist = [w for w in wordlist if len(w) == 5]
@@ -129,18 +137,6 @@ def main():
         wordlist = check_recommand(str_answer, str_status, wordlist)
         show_recommand_word(wordlist)
 
+# run main function
 if __name__ == "__main__":
     main()
-
-    
-
-
-
-
-    
-
-    
-
-
-
-                
