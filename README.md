@@ -12,4 +12,6 @@ Follow the program hints to enter the answer and status. Reference following ima
 ![image](https://github.com/ZhongJunJimmy/wordle-tool/blob/main/command.png?raw=true)
 
 
-### [TBD] Add sorted by weights...
+### [TBD] 
+
+- ~~Add sorted by weights~~
