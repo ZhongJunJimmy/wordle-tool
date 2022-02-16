@@ -15,3 +15,4 @@ Follow the program hints to enter the answer and status. Reference following ima
 ### [TBD] 
 
 - ~~Add sorted by weights~~ 2021.02.16
+- ~~optimizate a letter display more time issue~~ 2021.02.16
