@@ -39,9 +39,9 @@ def str_status_validation(str_status):
 def input_answer():
     str_answer_validation_status = 0
     while True:
-        print('Please input your answer: ')
+        print('Please input your answer or -1 to quit, -2 to reset: ')
         str_answer = input()
-        if (str_answer_validation(str_answer) == 1):
+        if (str_answer_validation(str_answer) == 1 or str_answer == '-1' or str_answer == '-2'):
             return str_answer
         else:
             print('The length of answer MUST equal 5 and MUST be an alphabet.')
@@ -50,10 +50,10 @@ def input_answer():
 def input_status():
     str_status_validation_status = 0
     while True:
-        print('Please input the wordle status: ')
+        print('Please input the wordle status or -1 to reset answer word: ')
         print('(0: not exist, 1: current position, 2: exist but wrong position)')
         str_status = input()
-        if (str_status_validation(str_status) == 1):
+        if (str_status_validation(str_status) == 1 or str_status == '-1'):
             return str_status
         else:
             print('The length of answer MUST equal 5 and MUST be an digital.')
@@ -144,48 +144,6 @@ def check_recommand(str_answer, str_status, data_answer_array, wordlist):
         if(len(letterArray) != 0):
             wordlist = sorted_by_wrong_pos_letter(wordlist, letterArray)
                   
-    # print(wordlist)
-
-    '''
-    letterArray = []
-    list_regex_current = list('^.....$')
-    count = 0
-    current_status = ""
-    for status in str_status:
-        if int(status) == 0 :
-            list_match_reg = list('^.....$')
-            list_match_reg[count+1] = '[^'+str_answer[count]+']'
-            str_match_reg = ''.join(list_match_reg)
-            wordlist = [w for w in wordlist if re.match(str_match_reg, w.lower())]
-            
-            count+=1
-        elif int(status) == 1 :
-            list_regex_current[count+1] = str_answer[count]
-            count+=1
-        elif int(status) == 2 :
-            letterArray.append(str_answer[count])
-            list_match_reg = list('^.....$')
-            list_match_reg[count+1] = '[^'+str_answer[count]+']'
-            str_match_reg = ''.join(list_match_reg)
-            # print(str_match_reg)
-            # print(wordlist)
-            wordlist = [w for w in wordlist if re.search(str_match_reg, w.lower())]
-            # print(wordlist)
-            count+=1
-    
-    str_regex_current = ''.join(list_regex_current)
-    # print(str_regex_current)
-    # print(str_regex_wrongPos)
-    if(len(letterArray) != 0):
-        wordlist = sorted_by_wrong_pos_letter(wordlist, letterArray)
-    if(str_regex_current != '^.....$'):
-        # print(str_regex_current)
-        # print(wordlist[:20])
-        wordlist = [w for w in wordlist if re.match(str_regex_current, w.lower())]
-        # print(wordlist[:20])
-    #print(wordlist)
-    #sort_by_rule(str_answer, str_status, wordlist)
-    #print(wordlist)'''
     return wordlist # return top 20 result
 
 # show recommand list by table
@@ -195,6 +153,15 @@ def show_recommand_word(result):
     for word in result[:20]:
         print(str(count) + '\t' + word)
         count+=1
+
+def checkQuestion(str_question):
+    userAnswer = ''
+    while (userAnswer != 'y' and userAnswer != 'Y' and userAnswer != 'n' and userAnswer != 'N'):
+        print(str_question+' (y/n)')
+        userAnswer = input()
+    if(userAnswer == 'y' or userAnswer == 'Y'):
+        return True
+    return False
 
 # main function
 def main():
@@ -207,14 +174,24 @@ def main():
         data_answer_array = []
 
         str_answer = input_answer()
-        str_status = input_status()
-
-        for i in range(0,5):
-            data_answer_array.append([str_answer[i], int(str_status[i])])
-
-        show_answer_status(data_answer_array)
-        wordlist = check_recommand(str_answer, str_status, data_answer_array, wordlist)
-        show_recommand_word(wordlist)
+        if str_answer == '-1':
+            if(checkQuestion('Are you sure to quit the program?')):
+                print('See you')
+                break
+        elif str_answer == '-2':
+            if(checkQuestion('Are you sure to reset the dictionary?')):
+                wordlist = nltk.corpus.words.words()
+                wordlist = [w for w in wordlist if len(w) == 5]
+                print('The program\'s dictionary had been reset.')
+        else:
+            str_status = input_status()
+            if str_status == '-1':
+                continue
+            for i in range(0,5):
+                data_answer_array.append([str_answer[i], int(str_status[i])])
+            show_answer_status(data_answer_array)
+            wordlist = check_recommand(str_answer, str_status, data_answer_array, wordlist)
+            show_recommand_word(wordlist)
 
 # run main function
 if __name__ == "__main__":
