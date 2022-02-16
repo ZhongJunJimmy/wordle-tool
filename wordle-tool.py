@@ -1,4 +1,4 @@
-import nltk
+#import nltk
 import re
 
 # download dictionary, when first run this program
@@ -163,11 +163,24 @@ def checkQuestion(str_question):
         return True
     return False
 
+def getDictionary():
+    words_file = open("words.txt", "r")
+
+    list_of_word = []
+    for word in words_file:
+        stripped_word = word.strip()
+        list_of_word.append(stripped_word)
+
+    words_file.close()
+
+    return list_of_word
+
 # main function
 def main():
-    wordlist = nltk.corpus.words.words()
+    #wordlist = nltk.corpus.words.words()
+    wordlist = getDictionary()
     wordlist = [w for w in wordlist if len(w) == 5]
-    # print(wordlist)
+    #print(wordlist)
     # print([w for w in wordlist if re.search('^..a..', w)])
 
     while True:
@@ -180,7 +193,8 @@ def main():
                 break
         elif str_answer == '-2':
             if(checkQuestion('Are you sure to reset the dictionary?')):
-                wordlist = nltk.corpus.words.words()
+                #wordlist = nltk.corpus.words.words()
+                wordlist = getDictionary()
                 wordlist = [w for w in wordlist if len(w) == 5]
                 print('The program\'s dictionary had been reset.')
         else:
@@ -195,4 +209,5 @@ def main():
 
 # run main function
 if __name__ == "__main__":
+
     main()
