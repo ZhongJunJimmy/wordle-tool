@@ -74,8 +74,27 @@ def show_answer_status(str_answer, str_status):
             count+=1
     print(current_status)
 
+def sorted_by_wrong_pos_letter(wordlist, letterArray):
+    str_reg_msg = ''
+    str_match_msg = ''
+    for i in range(0, len(letterArray)):
+        str_match_msg += letterArray[i]
+        if(i < len(letterArray)):
+            str_match_msg += '|'
+    temp_str_match_msg = ''
+    for i in range(0, 5):
+        temp_list_match_msg = list('^.....$')
+        temp_list_match_msg[i+1] = str_match_msg
+        str_reg_msg += ''.join(temp_list_match_msg)
+        if(i < 5):
+            str_reg_msg += '|'
+
+    return [w for w in wordlist if re.match("^"+str_reg_msg+"$", w.lower())]
+
+
 # compare and match by regex, return recommand list
 def check_recommand(str_answer, str_status, wordlist):
+    letterArray = []
     list_regex_current = list('^.....$')
 
     
@@ -93,6 +112,7 @@ def check_recommand(str_answer, str_status, wordlist):
             list_regex_current[count+1] = str_answer[count]
             count+=1
         elif int(status) == 2 :
+            letterArray.append(str_answer[count])
             list_match_reg = list('^.....$')
             list_match_reg[count+1] = '[^'+str_answer[count]+']'
             str_match_reg = ''.join(list_match_reg)
@@ -105,6 +125,8 @@ def check_recommand(str_answer, str_status, wordlist):
     str_regex_current = ''.join(list_regex_current)
     # print(str_regex_current)
     # print(str_regex_wrongPos)
+    if(len(letterArray) != 0):
+        wordlist = sorted_by_wrong_pos_letter(wordlist, letterArray)
     if(str_regex_current != '^.....$'):
         # print(str_regex_current)
         # print(wordlist[:20])
