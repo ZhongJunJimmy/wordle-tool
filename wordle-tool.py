@@ -95,7 +95,7 @@ def sorted_by_wrong_pos_letter(wordlist, letterArray, word_length):
         if(i < word_length):
             str_reg_msg += '|'
 
-    return [w for w in wordlist if re.match("^"+str_reg_msg+"$", w)]
+    return [w for w in wordlist if re.match("^"+str_reg_msg+"$", w.lower())]
 
 
 # compare and match by regex, return recommend list
@@ -121,10 +121,10 @@ def check_recommend(str_answer, str_status, data_answer_array, wordlist, word_le
                 for j in range(0,  word_length):
                     str_word_len_reg += '.'
                 list_match_reg = list('^' + str_word_len_reg + '$')
-                list_match_reg[i] = '[^'+data_answer_array[i][0]+']'
+                list_match_reg[i+1] = '[^'+data_answer_array[i][0]+']'
                 str_match_reg = ''.join(list_match_reg)
                 # print(str_match_reg)
-                wordlist = [w for w in wordlist if re.match(str_match_reg, w)]
+                wordlist = [w for w in wordlist if re.match(str_match_reg, w.lower())]
                 str_word_len_reg = ''
                 # print(wordlist)
             else:
@@ -138,7 +138,7 @@ def check_recommend(str_answer, str_status, data_answer_array, wordlist, word_le
                         list_match_reg[j+1] = data_answer_array[i][0]
                 str_match_reg = ''.join(list_match_reg)
                 # print(str_match_reg)
-                wordlist = [w for w in wordlist if re.match(str_match_reg, w)]
+                wordlist = [w for w in wordlist if re.match(str_match_reg, w.lower())]
                 str_word_len_reg = ''
                 # print(wordlist)
 
@@ -149,7 +149,7 @@ def check_recommend(str_answer, str_status, data_answer_array, wordlist, word_le
             list_match_correct_letter_reg[i+1] = data_answer_array[i][0]
             str_match_correct_letter_reg = ''.join(list_match_correct_letter_reg)
             # print(str_match_correct_letter_reg)
-            wordlist = [w for w in wordlist if re.match(str_match_correct_letter_reg, w)]
+            wordlist = [w for w in wordlist if re.match(str_match_correct_letter_reg, w.lower())]
             str_word_len_reg = ''
             # print(wordlist)
             
@@ -162,7 +162,7 @@ def check_recommend(str_answer, str_status, data_answer_array, wordlist, word_le
             list_match_reg[i+1] = '[^' + data_answer_array[i][0] + ']'
             str_match_reg = ''.join(list_match_reg)
             # print(str_match_reg)
-            wordlist = [w for w in wordlist if re.match(str_match_reg, w)]
+            wordlist = [w for w in wordlist if re.match(str_match_reg, w.lower())]
             str_word_len_reg = ''
             # print(wordlist)
 
@@ -178,7 +178,7 @@ def show_recommend_word(result):
     print(bcolors.HINT + 'Recommend Answer: ' + bcolors.ENDC)
     count = 1
     for word in result[:20]:
-        print(bcolors.HINT + str(count) + '\t' + word + bcolors.ENDC)
+        print(bcolors.HINT + str(count) + '\t' + word.lower() + bcolors.ENDC)
         count+=1
 
 def checkQuestion(str_question):
