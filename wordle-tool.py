@@ -1,5 +1,7 @@
 #import nltk
 import re
+import os
+clear = lambda: os.system('clear')
 
 # download dictionary, when first run this program
 # nltk.download('words')
@@ -214,6 +216,7 @@ def input_word_length():
 
 # main function
 def main():
+    clear()
     word_length = input_word_length()
 
     #wordlist = nltk.corpus.words.words()
@@ -221,7 +224,7 @@ def main():
     wordlist = [w for w in wordlist if re.match(r"^\w{" + word_length + "}$", w.lower())]
     #print(wordlist)
     # print([w for w in wordlist if re.search('^..a..', w)])
-
+    
     while True:
         data_answer_array = []
 
@@ -233,6 +236,7 @@ def main():
         elif str_answer == '-2':
             if(checkQuestion('Are you sure to reset the dictionary?')):
                 #wordlist = nltk.corpus.words.words()
+                clear()
                 wordlist = getDictionary()
                 wordlist = [w for w in wordlist if re.match(r"^\w{" + word_length + "}$", w.lower())]
                 print(bcolors.HINT + 'The program\'s dictionary had been reset.' + bcolors.ENDC)
