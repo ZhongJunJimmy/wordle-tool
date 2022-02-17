@@ -228,7 +228,7 @@ def main():
         str_answer = input_answer(int(word_length))
         if str_answer == '-1':
             if(checkQuestion('Are you sure to quit the program?')):
-                print(bcolors.INFO + 'See you' + bcolors.ENDC)
+                print(bcolors.HINT + 'See you' + bcolors.ENDC)
                 break
         elif str_answer == '-2':
             if(checkQuestion('Are you sure to reset the dictionary?')):
