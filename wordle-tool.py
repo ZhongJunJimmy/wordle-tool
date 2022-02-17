@@ -148,7 +148,7 @@ def check_recommand(str_answer, str_status, data_answer_array, wordlist):
 
 # show recommand list by table
 def show_recommand_word(result):
-    print('Recommand Answer: ')
+    print('Recommend Answer: ')
     count = 1
     for word in result[:20]:
         print(str(count) + '\t' + word)
