@@ -21,4 +21,4 @@ Follow the program hints to enter the answer and status. Reference following ima
 - ~~optimizate a letter display more time issue~~ 2021.02.16
 - ~~change a new words dictionary~~ 2021.02.16
 - ~~optimizate the words dictionary contents~~ 2021.02.17
-- [TBD] For more alphabet version compatible 
+- ~~For more alphabet version compatible~~ 2021.02.17
