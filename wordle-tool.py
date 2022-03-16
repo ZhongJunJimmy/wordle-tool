@@ -1,6 +1,6 @@
 import re
 import os
-import urllib
+import urllib.request
 clear = lambda: os.system('clear')
 
 if not os.path.isfile('words.txt'):
