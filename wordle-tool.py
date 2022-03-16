@@ -3,6 +3,7 @@ import os
 import urllib.request
 clear = lambda: os.system('clear')
 
+# download dictionary fron github raw if the dictionary does not exist
 if not os.path.isfile('words.txt'):
     urllib.request.urlretrieve("https://raw.githubusercontent.com/ZhongJunJimmy/wordle-tool/main/words.txt", "words.txt")
 
