@@ -1,10 +1,11 @@
-#import nltk
+
 import re
 import os
+import urllib
 clear = lambda: os.system('clear')
 
-# download dictionary, when first run this program
-# nltk.download('words')
+if not os.path.isfile('words.txt'):
+    urllib.urlretrieve("https://raw.githubusercontent.com/ZhongJunJimmy/wordle-tool/main/words.txt", "words.txt")
 
 # set console font color following wordle rule
 class bcolors:
