@@ -1,11 +1,10 @@
-
 import re
 import os
 import urllib
 clear = lambda: os.system('clear')
 
 if not os.path.isfile('words.txt'):
-    urllib.urlretrieve("https://raw.githubusercontent.com/ZhongJunJimmy/wordle-tool/main/words.txt", "words.txt")
+    urllib.request.urlretrieve("https://raw.githubusercontent.com/ZhongJunJimmy/wordle-tool/main/words.txt", "words.txt")
 
 # set console font color following wordle rule
 class bcolors:
