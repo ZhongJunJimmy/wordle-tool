@@ -19,6 +19,7 @@ class bcolors:
     ENDC = '\033[0m'
     
 # validate the answer entering by user
+'''
 def str_answer_validation(str_answer, word_length):
     if(len(str_answer) == word_length):
         for letter in str_answer:
@@ -29,7 +30,7 @@ def str_answer_validation(str_answer, word_length):
         return 0
     
     return 1
-
+'''
 # validate the status entering by user form wordle result
 def str_status_validation(str_status, word_length):
     if(len(str_status) == word_length):
@@ -43,6 +44,7 @@ def str_status_validation(str_status, word_length):
     return 1
 
 # input answer with validation
+'''
 def input_answer(word_length):
     str_answer_validation_status = 0
     while True:
@@ -52,18 +54,18 @@ def input_answer(word_length):
             return str_answer
         else:
             print(bcolors.ERROR + 'Error: The length of answer MUST equal ' + str(word_length) + ' and MUST be an alphabet Also you can enter -1 to quit, -2 to reset.' + bcolors.ENDC)
-    
+'''
 # input status with validation
 def input_status(word_length):
     str_status_validation_status = 0
     while True:
-        print(bcolors.INFO + 'Please input the wordle status or -1 to reset answer word: ' + bcolors.ENDC)
+        print(bcolors.INFO + 'Please input the wordle status or -1 to quit, -2 to reset: ' + bcolors.ENDC)
         print(bcolors.INFO + '(0: not exist, 1: current position, 2: exist but wrong position)' + bcolors.ENDC)
         str_status = input()
-        if (str_status_validation(str_status, word_length) == 1 or str_status == '-1'):
+        if (str_status_validation(str_status, word_length) == 1 or str_status == '-1' or str_status == '-2'):
             return str_status
         else:
-            print(bcolors.ERROR + 'Error: The length of answer MUST equal ' + str(word_length) + ' and MUST be an digital. Also you can enter -1 to reset answer word' + bcolors.ENDC)
+            print(bcolors.ERROR + 'Error: The length of answer MUST equal ' + str(word_length) + ' and MUST be an digital. Also you can enter -1 to quit, -2 to reset.' + bcolors.ENDC)
 
 # show answer and status following wordle rules with user entering
 def show_answer_status(data_answer_array):
@@ -98,7 +100,7 @@ def sorted_by_wrong_pos_letter(wordlist, letterArray, word_length):
         if(i < word_length):
             str_reg_msg += '|'
 
-    return [w for w in wordlist if re.match("^"+str_reg_msg+"$", w.lower())]
+    return [w for w in wordlist if re.match("^"+str_reg_msg+"$", w.upper())]
 
 
 # compare and match by regex, return recommend list
@@ -127,7 +129,7 @@ def check_recommend(str_answer, str_status, data_answer_array, wordlist, word_le
                 list_match_reg[i+1] = '[^'+data_answer_array[i][0]+']'
                 str_match_reg = ''.join(list_match_reg)
                 # print(str_match_reg)
-                wordlist = [w for w in wordlist if re.match(str_match_reg, w.lower())]
+                wordlist = [w for w in wordlist if re.match(str_match_reg, w.upper())]
                 str_word_len_reg = ''
                 # print(wordlist)
             else:
@@ -141,7 +143,7 @@ def check_recommend(str_answer, str_status, data_answer_array, wordlist, word_le
                         list_match_reg[j+1] = data_answer_array[i][0]
                 str_match_reg = ''.join(list_match_reg)
                 # print(str_match_reg)
-                wordlist = [w for w in wordlist if re.match(str_match_reg, w.lower())]
+                wordlist = [w for w in wordlist if re.match(str_match_reg, w.upper())]
                 str_word_len_reg = ''
                 # print(wordlist)
 
@@ -152,7 +154,7 @@ def check_recommend(str_answer, str_status, data_answer_array, wordlist, word_le
             list_match_correct_letter_reg[i+1] = data_answer_array[i][0]
             str_match_correct_letter_reg = ''.join(list_match_correct_letter_reg)
             # print(str_match_correct_letter_reg)
-            wordlist = [w for w in wordlist if re.match(str_match_correct_letter_reg, w.lower())]
+            wordlist = [w for w in wordlist if re.match(str_match_correct_letter_reg, w.upper())]
             str_word_len_reg = ''
             # print(wordlist)
             
@@ -165,7 +167,7 @@ def check_recommend(str_answer, str_status, data_answer_array, wordlist, word_le
             list_match_reg[i+1] = '[^' + data_answer_array[i][0] + ']'
             str_match_reg = ''.join(list_match_reg)
             # print(str_match_reg)
-            wordlist = [w for w in wordlist if re.match(str_match_reg, w.lower())]
+            wordlist = [w for w in wordlist if re.match(str_match_reg, w.upper())]
             str_word_len_reg = ''
             # print(wordlist)
 
@@ -181,7 +183,7 @@ def show_recommend_word(result):
     print(bcolors.HINT + 'Recommend Answer: ' + bcolors.ENDC)
     count = 1
     for word in result[:20]:
-        print(bcolors.HINT + str(count) + '\t' + word.lower() + bcolors.ENDC)
+        print(bcolors.HINT + str(count) + '\t' + word.upper() + bcolors.ENDC)
         count+=1
 
 def checkQuestion(str_question):
@@ -218,38 +220,50 @@ def input_word_length():
 # main function
 def main():
     clear()
-    word_length = input_word_length()
-
+    #word_length = input_word_length()
+    word_length = '5'
     #wordlist = nltk.corpus.words.words()
     wordlist = getDictionary()
-    wordlist = [w for w in wordlist if re.match(r"^\w{" + word_length + "}$", w.lower())]
+    wordlist = [w.upper() for w in wordlist if re.match(r"^\w{" + word_length + "}$", w.upper())]
+    #print recommand letter
+    isFirstTime = 1
+    #print(f'Suggested Word = AUREI')
     #print(wordlist)
-    # print([w for w in wordlist if re.search('^..a..', w)])
+    #print([w for w in wordlist if re.search('^..a..', w)])
     
     while True:
         data_answer_array = []
+        #print(wordlist[0])
+        #str_answer = input_answer(int(word_length))
+        str_answer = wordlist[0].upper()
+        if(isFirstTime == 1):
+            str_answer = 'AUREI'
+            isFirstTime = 2
+        print(f'Suggested Word = {str_answer}')
 
-        str_answer = input_answer(int(word_length))
-        if str_answer == '-1':
+        str_status = input_status(int(word_length))
+
+        if str_status == '-1':
             if(checkQuestion('Are you sure to quit the program?')):
                 print(bcolors.HINT + 'See you' + bcolors.ENDC)
                 break
-        elif str_answer == '-2':
+        elif str_status == '-2':
             if(checkQuestion('Are you sure to reset the dictionary?')):
                 #wordlist = nltk.corpus.words.words()
                 clear()
                 wordlist = getDictionary()
-                wordlist = [w for w in wordlist if re.match(r"^\w{" + word_length + "}$", w.lower())]
+                wordlist = [w for w in wordlist if re.match(r"^\w{" + word_length + "}$", w.upper())]
+                isFirstTime = 1
                 print(bcolors.HINT + 'The program\'s dictionary had been reset.' + bcolors.ENDC)
         else:
-            str_status = input_status(int(word_length))
-            if str_status == '-1':
-                continue
             for i in range(0,int(word_length)):
                 data_answer_array.append([str_answer[i], int(str_status[i])])
             show_answer_status(data_answer_array)
             wordlist = check_recommend(str_answer, str_status, data_answer_array, wordlist, int(word_length))
-            show_recommend_word(wordlist)
+            # print recommand letter
+            # print(wordlist)
+            
+            #show_recommend_word(wordlist)
 
 # run main function
 if __name__ == "__main__":
